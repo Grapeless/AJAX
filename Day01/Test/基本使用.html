@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net.cn/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <script>
+      axios({
+          url: 'http://ajax-api.itheima.net/api/province'
+      }).then(res => {
+          const div = document.createElement('div')
+          div.innerHTML = res.data.data.map((value) => `<p>${value}</p>`).join('')
+
+          document.body.prepend(div)
+      })
+
+  </script>
+</body>
+</html>
