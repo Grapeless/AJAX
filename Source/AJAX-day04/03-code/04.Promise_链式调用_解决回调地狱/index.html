@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise链式调用_解决回调地狱</title>
+</head>
+
+<body>
+  <form>
+    <span>省份：</span>
+    <select>
+      <option class="province"></option>
+    </select>
+    <span>城市：</span>
+    <select>
+      <option class="city"></option>
+    </select>
+    <span>地区：</span>
+    <select>
+      <option class="area"></option>
+    </select>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    /**
+     * 目标：把回调函数嵌套代码，改成Promise链式调用结构
+     * 需求：获取默认第一个省，第一个市，第一个地区并展示在下拉菜单中
+    */
+
+    // 不能使用 try--catch 捕获异常
+    // 因为 try--catch 只能捕获同步代码的异常, promise 的异常可以使用 .catch 方法来捕获
+    let pname
+    axios({ url: 'http://hmajax.itheima.net/api/province' })
+    .then(res => {
+      // console.log(res)
+      pname = res.data.list[0]
+      document.querySelector('.province').innerHTML = pname
+      // 获取到省份信息后, 继续发请求获取城市信息, 将这个 Promise 对象返回出去
+      return axios({ url: 'http://hmajax.itheima.net/api/city', params: { pname } })
+    })
+    .then(res => {
+      // 继续 .then 获取到城市信息
+      // console.log(res)
+      const cname = res.data.list[0]
+      document.querySelector('.city').innerHTML = cname
+      // 发请求获取区县信息, 将这个 Promise 对象返回出去
+      return axios({ url: 'http://hmajax.itheima.net/api/area', params: { cname, pname } })
+    })
+    .then(res => {
+      // console.log(res)
+      document.querySelector('.area').innerHTML = res.data.list[0]
+    })
+    .catch(e => {
+      console.log(e)
+    })
+  </script>
+</body>
+
+</html>

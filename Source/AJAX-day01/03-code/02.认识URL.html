@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.认识URL</title>
+</head>
+
+<body>
+  <!-- 
+    新闻数据地址: http://hmajax.itheima.net/api/news
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 0. 引入 axios 
+    // 1. 发请求获取数据
+    axios({
+      url: 'http://ajax-api.itheima.net/api/news' // 服务器的资源地址
+    }).then(res => {
+      // 2. 获取服务器返回的结果
+      console.log(res)
+    })
+    // URL 的组成:
+    // 1. 协议
+    // 2. 域名
+    // 3. 资源路径
+
+    // URL 主要的作用是: 标识资源在互联网上的具体地址
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async函数和await_解决回调函数地狱</title>
+</head>
+
+<body>
+  <form>
+    <span>省份：</span>
+    <select>
+      <option class="province"></option>
+    </select>
+    <span>城市：</span>
+    <select>
+      <option class="city"></option>
+    </select>
+    <span>地区：</span>
+    <select>
+      <option class="area"></option>
+    </select>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    /**
+     * 目标：掌握async和await语法，解决回调函数地狱
+     * 概念：在async函数内，使用await关键字，获取Promise对象"成功状态"结果值
+     * 注意：await必须用在async修饰的函数内（await会阻止"异步函数内"代码继续执行，原地等待结果）
+    */
+
+    // async 关键字只能用在函数前, 给函数进行修饰
+    // await 必须结合 async 使用
+    async function getInfo() {
+      // await 获取的返回值就是 .then 回调函数中的第一个参数
+      // axios({ url: 'http://hmajax.itheima.net/api/province' }).then(res => {
+      // })
+
+      try { 
+        const res = await axios({ url: 'http://hmajax.itheima.net/api/province' })
+        // console.log(res.data.list[0])
+        const pname = res.data.list[0]
+        document.querySelector('.province').innerHTML = pname
+
+        const cityRes = await axios({ url: 'http://hmajax.itheima.net/api/city', params: { pname } })
+        // console.log(cityRes)
+        const cname = cityRes.data.list[0]
+        document.querySelector('.city').innerHTML = cname
+
+        const areaRes = await axios({url: 'http://hmajax.itheima.net/api/area', params: { pname, cname }})
+        document.querySelector('.area').innerHTML = areaRes.data.list[0]
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    // 总结: await 的代码只是看起来是同步的, 本质还是异步代码, 可以理解为 await 返回值及以后的代码都是 .then 回调函数中的代码, 它只是帮我们优化了开发的语法, 让我们的代码看起来更加优雅
+
+    getInfo()
+  </script>
+</body>
+
+</html>

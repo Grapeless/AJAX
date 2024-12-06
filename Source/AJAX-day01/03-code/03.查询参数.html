@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03.查询参数</title>
+</head>
+<body>
+  <!-- 
+    城市列表: http://hmajax.itheima.net/api/city
+    参数名: pname
+    值: 省份名字
+  -->
+  <div></div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 需求: 发请求拿到湖北省所有的市, 渲染到页面
+    // 1. 调用 axios 发起请求
+    //    - 传入查询参数
+    // axios 会帮我们使用 ? 自动拼接到 url 的后面
+    // 原始做法: ?pname=湖北省
+    axios({
+      // url: 'http://hmajax.itheima.net/api/city?pname=湖北省',
+      url: 'http://hmajax.itheima.net/api/city',
+      params: {
+        pname: '湖北省'
+      }
+    }).then(res => {
+      // 2. 获取数据并渲染
+      console.log(res)
+      document.querySelector('div').innerHTML = res.data.list.map(item => `<p>${item}</p>`).join('')
+    })
+  </script>
+</body>
+</html>

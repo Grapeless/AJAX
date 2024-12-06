@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>认识Promise</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 目标：使用 Promise 管理异步任务
+     * 用定时器来模拟请求
+    */
+    // Promise 对象是帮助我们完成异步任务的, 所有的异步任务都会有成功或失败的结果
+    // 可以通过 Promise 对象的 .then 方法获取成功的结果 .catch 获取失败的结果
+    // 1. 创建 Promise 对象
+    // 参数: 回调函数, 会立即执行
+    const p = new Promise((resolve, reject) => {
+      // console.log('我会立即执行')
+      // 在回调函数中, 可以执行异步任务 (定时器 / AJAX)
+      // 回调函数中有两个参数: 
+      // 参数1: resolve 成功的回调
+      // 参数2: reject 失败的回调
+      setTimeout(() => {
+        // console.log('模拟 AJAX 请求结果 - 成功')
+        // resolve('模拟 AJAX 请求结果 - 成功')
+        reject('模拟 AJAX 请求 - 失败')
+      }, 3000)
+    })
+
+    p.then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  </script>
+</body>
+
+</html>

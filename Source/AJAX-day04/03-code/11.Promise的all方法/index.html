@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise的all方法</title>
+</head>
+
+<body>
+  <p class="bj"></p>
+  <p class="sh"></p>
+  <ul class="my-ul"></ul>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    /**
+     * 目标：掌握Promise的all方法作用，和使用场景
+     * 业务：当我需要同一时间显示多个请求的结果时，就要把多请求合并
+     * 例如：默认显示"北京", "上海", "广州", "深圳"的天气在首页查看
+     * code：
+     * 北京-110100
+     * 上海-310100
+     * 广州-440100
+     * 深圳-440300
+    */
+
+    const p1 = axios({
+      url: 'http://hmajax.itheima.net/api/weather',
+      params: {
+        city: '110100'
+      }
+    })
+
+    const p2 = axios({
+      url: 'http://hmajax.itheima.net/api/weather',
+      params: {
+        city: '310100'
+      }
+    })
+
+    const p3 = axios({
+      url: 'http://hmajax.itheima.net/api/weather',
+      params: {
+        city: '440100'
+      }
+    })
+
+    const p4 = axios({
+      url: 'http://hmajax.itheima.net/api/weather',
+      params: {
+        city: '440300'
+      }
+    })
+
+    // console.log(p1, p2, p3, p4)
+    // Promise.all 的作用: 并发异步任务 (发请求)
+    // 希望同时获取到四个 Promise 的结果
+    // Promise 的静态方法: all
+    // 参数: promise 对象数组
+    // 返回值: 一个新的 Promise, 里面存放了刚刚批量执行的结果
+    // Promise.all() 传数组进去, 得到的结果也是数组
+    Promise.all([ p1, p2, p3, p4 ]).then(res => {
+      console.log(res)
+      // 尝试一下: 解构赋值, 实现一行代码写完 map
+      // const str = res.map(item => {
+      //   const city = item.data.data.area
+      //   const weather = item.data.data.weather
+      //   return `<li>${city}---${weather}</li>`
+      // }).join('')
+      const str = res.map(({ data: { data: { area, weather } } }) => `<li>${area}---${weather}</li>`).join('')
+
+      // console.log(str)
+      document.querySelector('.my-ul').innerHTML = str
+    })
+  </script>
+</body>
+
+</html>

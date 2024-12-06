@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMLHttpRequest_查询参数</title>
+</head>
+
+<body>
+  <p></p>
+  <script>
+    /**
+     * 目标：使用XHR携带查询参数，展示某个省下属的城市列表
+     * get http://hmajax.itheima.net/api/city
+     * 请求参数(查询参数): pname
+     * 查询参数都是在 url 后面使用 ? 拼接
+     * ?参数名1=参数值1&参数名2=参数值2
+    */
+    // 1. 创建 xhr
+    const xhr = new XMLHttpRequest()
+    // 2. 设置请求方法和 url
+    xhr.open('get', 'http://hmajax.itheima.net/api/city?pname=湖北省')
+    // 3. 添加事件监听 loadend
+    xhr.addEventListener('loadend', () => {
+      const res = JSON.parse(xhr.response)
+      console.log(res)
+      document.querySelector('p').innerHTML = res.list.join('<br>')
+    })
+    // 4. 发送请求
+    xhr.send()
+  </script>
+</body>
+
+</html>

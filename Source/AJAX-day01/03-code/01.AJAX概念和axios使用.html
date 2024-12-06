@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01.AJAX概念和axios使用</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <!-- 
+        axios库地址: https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js
+        省份数据地址: http://ajax-api.itheima.net/api/province
+    -->
+  <div></div>
+  <script>
+    // 需求: 获取省份数据, 渲染出来
+    // 0. 引入 axios 
+    // 1. 发请求获取数据
+    axios({
+      url: 'http://ajax-api.itheima.net/api/province' // 服务器的资源地址
+    }).then(res => {
+      // 2. 获取服务器返回的结果
+      console.log(res.data.data)
+      // 3. 渲染到页面
+      document.querySelector('div').innerHTML = res.data.data.map(item => `<p>${item}</p>`).join('')
+    })
+  </script>
+</body>
+
+</html>

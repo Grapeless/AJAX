@@ -1,0 +1,40 @@
+1.axios({
+    url,method,data,params
+}).then(res =>{}).catch(error =>{})
+
+2.URL查询参数：?key1=value1(&key2=value2&...)
+
+3.请求方法：get,post,put,delete,patch
+
+4.请求报文：请求行，请求头，空行，请求体
+
+5.相应报文：响应行，响应头，空行，响应体
+
+6.响应状态码：1..,2..,3..,4..,5..
+
+7.form-serialize.js: serialize(document.querySelector('form'),{hash:true,empty:true})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
